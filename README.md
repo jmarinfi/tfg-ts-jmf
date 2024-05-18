@@ -6,8 +6,12 @@ Instrucciones para la puesta en marcha de la aplicación:
 
 - Clonar el repositorio:
 
+`git clone https://github.com/jmarinfi/tfg-ts-jmf.git`
+
 - Acceder a la carpeta principal:
+
+`cd tfg-ts-jmf`
 
 - Levantar los servicios mediante docker compose:
 
-docker compose up
+`docker compose up`
