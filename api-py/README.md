@@ -1,17 +1,19 @@
-Activar entorno virtual:
+## Instrucciones relativas al servicio FastAPI
 
-source .venv/bin/activate
+- Activar entorno virtual:
 
-Arrancar el servidor de desarrollo:
+`source .venv/bin/activate`
 
-uvicorn main:app --port 5000 --reload
+- Arrancar el servidor de desarrollo:
 
-
-Construir imagen de Docker:
-
-docker build -t jmarinfi/api_py:latest .
+`uvicorn main:app --port 5000 --reload`
 
 
-Ejecutar contenedor de Docker:
+- Construir imagen de Docker:
 
-docker run --name api_py -p 5000:5000 jmarinfi/api_py:latest
+`docker build -t jmarinfi/api_py:latest .`
+
+
+- Ejecutar contenedor de Docker:
+
+`docker run --name api_py -p 5000:5000 jmarinfi/api_py:latest`

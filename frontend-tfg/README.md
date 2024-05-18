@@ -8,12 +8,13 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
 
+## Instrucciones relativas al frontend:
 
-Construir la imagen de Docker:
+- Construir la imagen de Docker:
 
-docker build -t jmarinfi/frontend_tfg:latest .
+`docker build -t jmarinfi/frontend_tfg:latest .`
 
 
-Ejecutar la imagen de Docker
+- Ejecutar la imagen de Docker
 
-docker run --name frontend_tfg -p 5173:5173 jmarinfi/frontend_tfg:latest
+`docker run --name frontend_tfg -p 5173:5173 jmarinfi/frontend_tfg:latest`

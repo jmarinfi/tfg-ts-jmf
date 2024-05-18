@@ -1,13 +1,15 @@
-Comando para iniciar la API:
+## Instrucciones relativas al servicio Plumber:
 
-plumber::plumb(file='plumber.R')$run(port=8000)
+- Comando para iniciar la API:
 
-
-Comando para montar la imagen docker (desde la carpeta raíz):
-
-docker build -t jmarinfi/api_r:latest .
+`plumber::plumb(file='plumber.R')$run(port=8000)`
 
 
-Comando para iniciar el contenedor:
+- Comando para construir la imagen docker (desde la carpeta raíz):
 
-docker run --name api_r -p 8000:8000 jmarinfi:latest
+`docker build -t jmarinfi/api_r:latest .`
+
+
+- Comando para iniciar el contenedor:
+
+`docker run --name api_r -p 8000:8000 jmarinfi:latest`
