@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  api_r:
+    build:
+      context: ./api_r
+      dockerfile: Dockerfile
+    container_name: api_r
+    ports:
+      - "8000:8000"
+    networks:
+      - default
+
+  api_python:
+    build:
+      context: ./api-py
+      dockerfile: Dockerfile
+    container_name: api_py
+    ports:
+      - "5000:5000"
+    networks:
+      - default
+
+  frontend:
+    build:
+      context: ./frontend-tfg
+      dockerfile: Dockerfile
+    container_name: frontend_tfg
+    ports:
+      - "5173:5173"
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
+
