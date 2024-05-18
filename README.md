@@ -15,3 +15,7 @@ Instrucciones para la puesta en marcha de la aplicación:
 - Levantar los servicios mediante docker compose:
 
 `docker compose up`
+
+- Acceder al frontend:
+
+`http://localhost:5173/`
