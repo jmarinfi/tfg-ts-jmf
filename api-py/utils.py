@@ -107,11 +107,11 @@ def get_predictions(dataset, model, test_set,n_steps, n_features, scaler):
     predictions = scaler.inverse_transform(predictions)
     return predictions
 
-def get_base64_plot(training_data, test_data, predictions, model, plt_object, buffer):
+def get_base64_plot(sensor, training_data, test_data, predictions, model, plt_object, buffer):
     plt_object.plot(training_data['x'], training_data['y'], color='blue', label='Entrenamiento')
     plt_object.plot(test_data['x'], test_data['y'], color='gray', label='Real')
     plt_object.plot(predictions['x'], predictions['y'], color='red', label='Predicciones')
-    plt_object.title(f'Predicciones {model} vs Datos Reales')
+    plt_object.title(f'Predicciones {model} vs Datos Reales sensor {sensor}')
     plt_object.xlabel('Tiempo')
     plt_object.ylabel('Medida')
     plt_object.legend()

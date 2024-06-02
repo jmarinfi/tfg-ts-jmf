@@ -154,7 +154,7 @@ function(sensor) {
     geom_line(
       data = test_data, aes(x = Day, y = MEDIDA, color = "Datos de Prueba")
     ) +
-    labs(title = "Predicción ETS y Datos Reales", x = "Fecha", y = "Medida") +
+    labs(title = paste("Predicción ETS y Datos Reales sensor", sensor), x = "Fecha", y = "Medida") +
     scale_color_manual(
       values = c(
         "Datos de Entrenamiento" = "black",
@@ -217,6 +217,7 @@ function(sensor) {
   # Entrenar el modelo ARIMA con el conjunto de entrenamiento
   fit <- train_data %>%
     model(ARIMA(MEDIDA, stepwise = FALSE, greedy = FALSE))
+  print(fit)
 
   # Predicciones sobre el conjunto de prueba
   forecast_arima <- fit %>%
@@ -234,7 +235,7 @@ function(sensor) {
     geom_line(
       data = test_data, aes(x = Day, y = MEDIDA, color = "Datos de Prueba")
     ) +
-    labs(title = "Predicción ARIMA y Datos Reales", x = "Fecha", y = "Medida") +
+    labs(title = paste("Predicción ARIMA y Datos Reales sensor", sensor), x = "Fecha", y = "Medida") +
     scale_color_manual(
       values = c(
         "Datos de Entrenamiento" = "black",
@@ -306,6 +307,7 @@ function(sensor1, sensor2) {
   # Entrenar el modelo VAR con el conjunto de entrenamiento
   fit <- train_data %>%
     model(VAR(vars(MEDIDA, MEDIDA_temp)))
+  print(fit)
 
   # Predicciones sobre el conjunto de prueba
   pred <- fit %>%
@@ -318,7 +320,7 @@ function(sensor1, sensor2) {
   plt_pred <- pred %>%
     autoplot(merged_data) +
     facet_grid(vars(.response), scales = "free_y") +
-    labs(title = "Predicción VAR y datos reales", x = "Fecha", y = "Medida")
+    labs(title = paste("Predicción VAR y datos reales sensor", sensor1), x = "Fecha", y = "Medida")
 
   temp_file <- tempfile(fileext = ".png")
   ggsave(temp_file, plot = plt_pred, width = 7, height = 5, dpi = 300)
@@ -383,6 +385,7 @@ function(sensor) {
 
   # Entrenar el modelo Random Forest con el conjunto de entrenamiento
   rf_model <- randomForest(MEDIDA ~ ., data = train_data)
+  print(rf_model)
 
   # Predicciones sobre el conjunto de prueba
   predictions <- predict(rf_model, test_data)
@@ -417,7 +420,7 @@ function(sensor) {
   # Crear el gráfico
   plot_rf <- plot_data %>%
     autoplot(MEDIDA) +
-    labs(title = "Predicción Random Forest y Datos Reales", x = "Fecha", y = "Medida") +
+    labs(title = paste("Predicción Random Forest y Datos Reales sensor", sensor), x = "Fecha", y = "Medida") +
     scale_color_manual(values = c("Train" = "black", "Test" = "blue", "Prediction" = "red"))
 
   temp_file <- tempfile(fileext = ".png")
@@ -465,6 +468,7 @@ function(sensor) {
 
   # Se entrena el modelo
   model <- xgboost(data = dtrain, nrounds = 200)
+  print(model)
 
   # Se seleccionan las características del conjunto de prueba
   X_test <- test_data[, c("year", "month", "day")] %>% as.matrix()
@@ -499,7 +503,7 @@ function(sensor) {
   # Se grafican los resultados
   p <- plot_data %>%
     autoplot(MEDIDA) +
-    labs(title = "Predicción XGBoost y Datos Reales", x = "Fecha", y = "Medida") +
+    labs(title = paste("Predicción XGBoost y Datos Reales sensor", sensor), x = "Fecha", y = "Medida") +
     scale_color_manual(
       values = c("Entrenamiento" = "black", "Prueba" = "blue", "Predicción" = "red")
     )
@@ -535,6 +539,7 @@ function(sensor) {
   # Entrenar el modelo NNETAR con el conjunto de entrenamiento
   fit <- train_data %>%
     model(NNETAR(MEDIDA))
+  print(fit)
 
   # Predicciones sobre el conjunto de prueba
   forecast_nnetar <- fit %>%
@@ -547,7 +552,7 @@ function(sensor) {
   forecast_plot <- autoplot(forecast_nnetar) +
     geom_line(data = train_data, aes(x = Day, y = MEDIDA, color = "Entrenamiento")) +
     geom_line(data = test_data, aes(x = Day, y = MEDIDA, color = "Prueba")) +
-    labs(title = "Predicción NNETAR y Datos Reales", x = "Fecha", y = "Medida") +
+    labs(title = paste("Predicción NNETAR y Datos Reales sensor", sensor), x = "Fecha", y = "Medida") +
     scale_color_manual(values = c("Entrenamiento" = "black", "Prueba" = "blue", "Predicción" = "red"))
 
   temp_file <- tempfile(fileext = ".png")

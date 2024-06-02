@@ -49,6 +49,7 @@ async def forecast_rnn(sensor: str = '25466X', model: str = "SimpleRNN"):
     split_index = int(len(data) * 0.8)
     training_set = data.iloc[:split_index].values
     test_set = data.iloc[split_index:].values
+    print(f'Test set: {test_set}')
 
     n_steps = 60
     n_features = 1
@@ -63,12 +64,17 @@ async def forecast_rnn(sensor: str = '25466X', model: str = "SimpleRNN"):
     )
 
     predictions = get_predictions(dataset=data, model=model_rnn, test_set=test_set, n_steps=n_steps, n_features=n_features, scaler=sc)
+    print(f'Predictions: {predictions}')
 
+    me = np.mean(test_set - predictions)
     mae = mean_absolute_error(test_set, predictions)
     mse = mean_squared_error(test_set, predictions)
     rmse = np.sqrt(mse)
+    mpe = np.mean((test_set - predictions) / test_set) * 100
+    mape = np.mean(np.abs((test_set - predictions) / test_set)) * 100
 
     grafic_pred_b64 = get_base64_plot(
+        sensor,
         {
             'x': np.arange(len(training_set)),
             'y': training_set,
@@ -88,6 +94,11 @@ async def forecast_rnn(sensor: str = '25466X', model: str = "SimpleRNN"):
     plt.close()
 
     return {
-        "reporte": [f'MAE: {mae}', f'MSE: {mse}', f'RMSE: {rmse}'],
+        "reporte": [
+            f'ME: {round(me, 5)}', 
+            f'RMSE: {round(rmse, 5)}', 
+            f'MAE: {round(mae, 5)}', 
+            f'MPE: {round(mpe, 5)}', f'MAPE: {round(mape, 5)}'
+            ],
         "grafico": grafic_pred_b64,
     }
